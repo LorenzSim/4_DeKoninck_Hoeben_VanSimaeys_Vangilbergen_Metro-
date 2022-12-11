@@ -7,11 +7,12 @@ import javafx.scene.layout.BorderPane;
 import view.panels.MetroCardOverviewPane;
 
 public class AdminMainPane extends BorderPane {
+
 	public AdminMainPane(){		
 	    TabPane tabPane = new TabPane(); 	    
         MetroCardOverviewPane metroCardOverviewPane = new MetroCardOverviewPane();
-	//maak een controlCenterPane aan
-	//maak een setupPane aan
+        //maak een controlCenterPane aan
+        //maak een setupPane aan
         Tab metroCardOverviewTab = new Tab("Metro cards overview",metroCardOverviewPane);
         Tab controlCenterTab = new Tab("Control Center");
         Tab setupTab = new Tab("Setup");
