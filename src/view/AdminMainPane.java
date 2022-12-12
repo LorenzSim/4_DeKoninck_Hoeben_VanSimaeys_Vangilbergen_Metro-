@@ -4,7 +4,9 @@ package view;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+import view.panels.ControlCenterPane;
 import view.panels.MetroCardOverviewPane;
+import view.panels.SetupPane;
 
 public class AdminMainPane extends BorderPane {
 

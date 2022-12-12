@@ -1,6 +1,7 @@
 package view.panels;
 
 
+import controller.MetroCardOverviewPaneController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -10,17 +11,17 @@ import model.MetroCard;
 
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
-import model.database.MetrocardDatabase;
-import model.database.loadSaveStrategies.LoadSaveStrategyEnum;
+
+import java.util.ArrayList;
 
 
 public class MetroCardOverviewPane extends GridPane{
-	private final MetrocardDatabase metrocardDatabase;
+	private final MetroCardOverviewPaneController controller = new MetroCardOverviewPaneController();
+	private ObservableList<MetroCard> metroCards;
 	private final TableView<MetroCard> table;
 
 	public MetroCardOverviewPane() {
-		metrocardDatabase = new MetrocardDatabase();
-		metrocardDatabase.setLoadSaveStrategy(LoadSaveStrategyEnum.EXCEL);
+		
 		table = new TableView<>();
 
 		TableColumn<MetroCard, Integer> month = new TableColumn<>("maand");
@@ -51,8 +52,12 @@ public class MetroCardOverviewPane extends GridPane{
 		alert.show();
 	}
 
-	public void refresh() {
-		ObservableList<MetroCard> metroCards = FXCollections.observableArrayList(metrocardDatabase.getCards());
+	public void updateMetroCardList(ArrayList<MetroCard> cards) {
+		metroCards = FXCollections.observableArrayList(cards);
+		refresh();
+	}
+
+	private void refresh() {
 		table.setItems(metroCards);
 		table.refresh();
 	}

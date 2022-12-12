@@ -4,15 +4,15 @@ package model.database.utilities;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
-public abstract class TekstLoadSaveTemplate<K,V>  {
+public abstract class TekstLoadSaveTemplate<K extends Comparable<K>,V>  {
     private static final String FILE_PATH = "src/bestanden/metrocards.txt";
 
     public Map<K, V> load () {
-        Map<K, V> result = new HashMap<>();
+        Map<K, V> result = new TreeMap<>();
         try {
             List<String> lines = Files.readAllLines(Paths.get(FILE_PATH));
             String[] currentLine;

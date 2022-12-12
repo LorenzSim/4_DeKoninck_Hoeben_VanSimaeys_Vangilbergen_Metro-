@@ -6,17 +6,17 @@ import jxl.write.WriteException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
-public abstract class ExelLoadSaveTemplate<K, V> {
+public abstract class ExelLoadSaveTemplate<K extends Comparable<K>, V> {
     private static final String FILE_PATH = "src/bestanden/metrocards.xls";
 
     private final ExcelPlugin excelPlugin = new ExcelPlugin();
 
     public Map<K, V> load() {
         ArrayList<ArrayList<String>> info;
-        Map<K, V> result = new HashMap<>();
+        Map<K, V> result = new TreeMap<>();
         try {
             info = excelPlugin.read(new File(FILE_PATH));
             for (ArrayList<String> row : info) {

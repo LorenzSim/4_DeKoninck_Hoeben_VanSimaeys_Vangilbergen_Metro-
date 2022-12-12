@@ -1,22 +1,19 @@
 package model.database;
 
 import model.MetroCard;
-import model.database.loadSaveStrategies.LoadSaveStrategyEnum;
 import model.database.loadSaveStrategies.LoadSaveStrategy;
-import model.database.loadSaveStrategies.LoadSaveStrategyFactory;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-public class MetrocardDatabase {
+public class MetroCardOverviewPane {
 
     private Map<Integer, MetroCard> cards;
-    private final LoadSaveStrategyFactory<Integer, MetroCard> loadSaveStrategyFactory;
 
     private LoadSaveStrategy<Integer, MetroCard> loadSaveStrategy;
 
-    public MetrocardDatabase() {
-        loadSaveStrategyFactory = new LoadSaveStrategyFactory<>();
+    public MetroCardOverviewPane() {
+
     }
     public void load() {
         cards = loadSaveStrategy.load();
@@ -25,11 +22,10 @@ public class MetrocardDatabase {
         loadSaveStrategy.save(cards);
     }
 
-    public void setLoadSaveStrategy(LoadSaveStrategyEnum strategy) {
-        loadSaveStrategy = loadSaveStrategyFactory.createLoadSaveStrategy(strategy);
+    public void setLoadSaveStrategy(LoadSaveStrategy<Integer, MetroCard> strategy) {
+        loadSaveStrategy = strategy;
     }
     public ArrayList<MetroCard> getCards() {
-        load();
         return new ArrayList<>(cards.values());
     }
 }
