@@ -41,4 +41,8 @@ public class MetroFacade implements Subject {
         metrocardDatabase.setLoadSaveStrategy(strategy);
         metrocardDatabase.load();
     }
+
+    public List<MetroCard> getMetroCardList() {
+        return metrocardDatabase.getCards();
+    }
 }
