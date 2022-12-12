@@ -1,15 +1,20 @@
 package view;
 
+import controller.MetroStationViewController;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.MetroFacade;
+
+import java.util.List;
 
 public class MetroStationView {
 	
-	private Stage stage = new Stage();		
+	private final Stage stage = new Stage();
 	
-	public MetroStationView(){			
+	public MetroStationView(MetroStationViewController controller){
+		controller.setView(this);
 		stage.setTitle("METRO STATION VIEW");
 		stage.initStyle(StageStyle.UTILITY);
 		stage.setX(5);
@@ -19,5 +24,9 @@ public class MetroStationView {
 		stage.setScene(scene);
 		stage.sizeToScene();			
 		stage.show();		
+	}
+
+	public void updateMetroCardIDList(List<Integer> IDs){
+
 	}
 }

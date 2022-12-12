@@ -12,16 +12,16 @@ import model.MetroCard;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 
 public class MetroCardOverviewPane extends GridPane{
-	private final MetroCardOverviewPaneController controller = new MetroCardOverviewPaneController();
 	private ObservableList<MetroCard> metroCards;
 	private final TableView<MetroCard> table;
 
-	public MetroCardOverviewPane() {
-		
+	public MetroCardOverviewPane(MetroCardOverviewPaneController controller) {
+		controller.setView(this);
 		table = new TableView<>();
 
 		TableColumn<MetroCard, Integer> month = new TableColumn<>("maand");
@@ -43,6 +43,7 @@ public class MetroCardOverviewPane extends GridPane{
 		table.getColumns().addAll(month, year, aantalbeschikbaar, aantalgebruikt);
 		getChildren().add(table);
 		refresh();
+
 	}
 
 	public void displayMessage(String message){
@@ -52,7 +53,7 @@ public class MetroCardOverviewPane extends GridPane{
 		alert.show();
 	}
 
-	public void updateMetroCardList(ArrayList<MetroCard> cards) {
+	public void updateMetroCardList(List<MetroCard> cards) {
 		metroCards = FXCollections.observableArrayList(cards);
 		refresh();
 	}

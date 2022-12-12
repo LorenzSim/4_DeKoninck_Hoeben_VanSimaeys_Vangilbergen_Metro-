@@ -1,7 +1,7 @@
 package view;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import controller.MetroTicketViewController;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -12,11 +12,14 @@ import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.util.List;
+
 
 public class MetroTicketView {
 	private Stage stage = new Stage();
 
-	public MetroTicketView(){
+	public MetroTicketView(MetroTicketViewController controller){
+		controller.setView(this);
 		stage.setTitle("METROTICKET VIEW");
 		stage.initStyle(StageStyle.UTILITY);
 		stage.setX(5);
@@ -34,6 +37,10 @@ public class MetroTicketView {
 		stage.setScene(scene);
 		stage.sizeToScene();
 		stage.show();
+	}
+
+	public void updateMetroCardIDList(List<Integer> IDs){
+
 	}
 
 }
