@@ -62,5 +62,4 @@ public class MetroCardOverviewPane extends GridPane{
 		table.refresh();
 	}
 
-
 }
