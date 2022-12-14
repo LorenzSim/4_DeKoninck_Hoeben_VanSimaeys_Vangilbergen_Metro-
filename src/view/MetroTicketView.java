@@ -28,7 +28,7 @@ public class MetroTicketView {
 		Button newMetroCardButton = new Button("New metro card");
 		TilePane newMetroCardTilePane = new TilePane();
 		EventHandler<ActionEvent> event = e -> {
-
+			controller.buyMetroCard();
 		};
 		newMetroCardButton.setOnAction(event);
 		newMetroCardTilePane.getChildren().add(newMetroCardButton);
