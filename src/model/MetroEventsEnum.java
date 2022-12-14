@@ -1,5 +1,6 @@
 package model;
 
 public enum MetroEventsEnum {
-    OPEN_METROSTATION
+    OPEN_METROSTATION,
+    BUY_METROCARD
 }
