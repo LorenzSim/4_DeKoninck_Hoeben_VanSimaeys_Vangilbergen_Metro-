@@ -13,7 +13,6 @@ import java.util.Map;
 public class MetroFacade implements Subject {
 
     private final MetroCardDatabase metrocardDatabase = new MetroCardDatabase();
-    private final LoadSaveStrategyFactory<Integer, MetroCard> loadSaveStrategyFactory = new LoadSaveStrategyFactory<>();
     private final Map<MetroEventsEnum, List<Observer>> observers;
 
     public MetroFacade() {
@@ -39,7 +38,7 @@ public class MetroFacade implements Subject {
     }
 
     public void openMetroStation() {
-        LoadSaveStrategy<Integer, MetroCard> strategy = loadSaveStrategyFactory.createLoadSaveStrategy();
+        LoadSaveStrategy<Integer, MetroCard> strategy = LoadSaveStrategyFactory.getInstance().createLoadSaveStrategy() ;
         metrocardDatabase.setLoadSaveStrategy(strategy);
         metrocardDatabase.load();
         notifyObservers(MetroEventsEnum.OPEN_METROSTATION);
