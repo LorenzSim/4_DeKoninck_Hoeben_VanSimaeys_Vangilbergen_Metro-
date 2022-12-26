@@ -16,10 +16,8 @@ public class MetroFacade implements Subject {
     private final Map<MetroEventsEnum, List<Observer>> observers;
 
     public MetroFacade() {
-        MetroEventsEnum[] metroEventsEnums = MetroEventsEnum.values();
-        observers = new HashMap<>(metroEventsEnums.length);
-
-        for (MetroEventsEnum event : metroEventsEnums) {
+        observers = new HashMap<>();
+        for (MetroEventsEnum event : MetroEventsEnum.values()) {
             observers.put(event, new ArrayList<>());
         }
     }

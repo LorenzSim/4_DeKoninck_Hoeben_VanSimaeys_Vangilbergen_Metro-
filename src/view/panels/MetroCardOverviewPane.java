@@ -4,7 +4,6 @@ package view.panels;
 import controller.MetroCardOverviewPaneController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.MetroCard;
@@ -46,12 +45,6 @@ public class MetroCardOverviewPane extends GridPane{
 
 	}
 
-	public void displayMessage(String message){
-		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setHeaderText("Information ");
-		alert.setContentText(message);
-		alert.show();
-	}
 
 	public void updateMetroCardList(List<MetroCard> cards) {
 		metroCards = FXCollections.observableArrayList(cards);

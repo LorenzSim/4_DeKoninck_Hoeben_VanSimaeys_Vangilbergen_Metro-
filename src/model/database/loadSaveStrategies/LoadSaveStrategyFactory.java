@@ -30,7 +30,7 @@ public class LoadSaveStrategyFactory {
             is.close();
             LoadSaveStrategyEnum strategy = LoadSaveStrategyEnum.valueOf(properties.getProperty("loadSaveStrategy"));
 
-            String className = "model.database.loadSaveStrategies." + strategy;
+            String className = "model.database.loadSaveStrategies." + strategy.getStringValue();
             Class<?> strategyClass = Class.forName(className);
             Object obj = strategyClass.getConstructor().newInstance();
 

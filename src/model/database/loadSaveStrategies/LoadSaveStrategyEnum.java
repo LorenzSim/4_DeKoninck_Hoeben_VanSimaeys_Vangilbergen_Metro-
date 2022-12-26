@@ -8,8 +8,7 @@ public enum LoadSaveStrategyEnum {
         this.stringValue = loadSaveStrategy;
     }
 
-    @Override
-    public String toString() {
+    public String getStringValue() {
         return stringValue;
     }
 }

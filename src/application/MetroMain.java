@@ -1,9 +1,6 @@
 package application;
 	
-import controller.ControlCenterPaneController;
-import controller.MetroCardOverviewPaneController;
-import controller.MetroStationViewController;
-import controller.MetroTicketViewController;
+import controller.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import model.MetroFacade;
@@ -21,8 +18,9 @@ public class MetroMain extends Application {
 		MetroCardOverviewPaneController metroCardOverviewPaneController = new MetroCardOverviewPaneController(metroFacade);
 		MetroStationViewController metroStationViewController = new MetroStationViewController(metroFacade);
 		MetroTicketViewController metroTicketViewController = new MetroTicketViewController(metroFacade);
+		SetupPaneController setupPaneController = new SetupPaneController(metroFacade);
 
-		AdminView adminView = new AdminView(controlCenterPaneController, metroCardOverviewPaneController);
+		AdminView adminView = new AdminView(controlCenterPaneController, metroCardOverviewPaneController, setupPaneController);
 		MetroTicketView metroTicketView = new MetroTicketView(metroTicketViewController);
 		MetroStationView metroStationView = new MetroStationView(metroStationViewController);
 	}

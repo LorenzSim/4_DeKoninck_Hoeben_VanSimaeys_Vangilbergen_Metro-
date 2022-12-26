@@ -3,6 +3,7 @@ package view.panels;
 
 import controller.ControlCenterPaneController;
 import controller.MetroCardOverviewPaneController;
+import controller.SetupPaneController;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -12,11 +13,11 @@ import view.panels.MetroCardOverviewPane;
 import view.panels.SetupPane;
 
 public class AdminMainPane extends BorderPane {
-    public AdminMainPane(ControlCenterPaneController controlCenterPaneController, MetroCardOverviewPaneController metroCardOverviewPaneController){
+    public AdminMainPane(ControlCenterPaneController controlCenterPaneController, MetroCardOverviewPaneController metroCardOverviewPaneController, SetupPaneController setupPaneController){
 	    TabPane tabPane = new TabPane();
 
         ControlCenterPane controlCenterPane = new ControlCenterPane(controlCenterPaneController);
-        SetupPane setupPane = new SetupPane();
+        SetupPane setupPane = new SetupPane(setupPaneController);
         MetroCardOverviewPane metroCardOverviewPane = new MetroCardOverviewPane(metroCardOverviewPaneController);
 
         Tab metroCardOverviewTab = new Tab("Metro cards overview", metroCardOverviewPane);
