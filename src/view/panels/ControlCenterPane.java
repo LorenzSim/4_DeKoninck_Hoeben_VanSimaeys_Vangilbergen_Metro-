@@ -14,6 +14,7 @@ public class ControlCenterPane extends GridPane {
         Button button = new Button("Open metrostation");
         EventHandler<ActionEvent> event = e -> {
             controller.openMetroStation();
+            getChildren().remove(button);
         };
         button.setOnAction(event);
         getChildren().add(button);
