@@ -6,7 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import model.TicketPriceDecorator.TicketPriceDiscountEnum;
 import model.database.loadSaveStrategies.LoadSaveStrategyEnum;
 
 import javafx.event.EventHandler;
@@ -30,7 +32,7 @@ public class SetupPane extends GridPane{
         saveButton.setTranslateY(100);
 
         EventHandler<ActionEvent> event = e -> {
-            controller.saveSettings(LoadSaveStrategyEnum.valueOf(lSSOptions.getValue()));
+            controller.saveLoadSaveStrategy(LoadSaveStrategyEnum.valueOf(lSSOptions.getValue()));
             Text saved = new Text("Settings are saved!");
             saved.setTranslateX(20);
             saved.setTranslateY(150);

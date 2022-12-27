@@ -41,6 +41,10 @@ public class MetroCardDatabase {
         cards.put(id, metroCard);
     }
 
+    public MetroCard getMetroCard(int id) {
+        return cards.get(id);
+    }
+
      private int generateId() {
         int result = -1;
          for (Integer id : cards.keySet()) {
