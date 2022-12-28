@@ -21,6 +21,7 @@ public class Open extends MetroGateState{
     @Override
     public void walkThroughGate() {
         metroGate.setClosedState();
+        metroGate.setLastAction("Card passed gate");
     }
 
     @Override

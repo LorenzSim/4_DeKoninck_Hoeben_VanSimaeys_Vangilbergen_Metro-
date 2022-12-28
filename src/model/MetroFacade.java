@@ -71,6 +71,29 @@ public class MetroFacade implements Subject {
         return metrocardDatabase.getTotalPriceSold();
     }
 
+    public void activate(int gateNumber) {
+        metroStation.activate(gateNumber);
+    }
+
+    public void scanMetroGate(int metroCardId, int gateNumber) {
+        metroStation.scanMetroGate(metrocardDatabase.getMetroCard(metroCardId), gateNumber);
+        notifyObservers(MetroEventsEnum.SCAN_METROGATE);
+    }
+
+    public void walkThroughGate(int gateNumber) {
+        metroStation.walkThroughGate(gateNumber);
+    }
+
+    public void deactivate(int gateNumber) {
+        metroStation.deactivate(gateNumber);
+    }
+    public String getLastAction(int gateId) {
+        return metroStation.getLastAction(gateId);
+    }
+    public int getScannedCards(int gateNumber) {
+        return metroStation.getScannedTickets(gateNumber);
+    }
+
     public List<String> getMetroTicketDiscountList() {
         Properties properties = new Properties();
         try {
@@ -82,22 +105,5 @@ public class MetroFacade implements Subject {
         }
         return Arrays.asList(properties.getProperty("PRICEDISCOUNTS").split(","));
     }
-
-    public void activate(int gateNumber) {
-        metroStation.activate(gateNumber);
-    }
-
-    public void scanMetroGate(int metroCardId, int gateNumber) {
-        metroStation.scanMetroGate(metrocardDatabase.getMetroCard(metroCardId), gateNumber);
-    }
-
-    public void walkThroughGate(int gateNumber) {
-        metroStation.walkThroughGate(gateNumber);
-    }
-
-    public void deactivate(int gateNumber) {
-        metroStation.deactivate(gateNumber);
-    }
-
 
 }

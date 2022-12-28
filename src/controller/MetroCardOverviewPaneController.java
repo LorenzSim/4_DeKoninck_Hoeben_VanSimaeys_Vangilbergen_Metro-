@@ -16,6 +16,7 @@ public class MetroCardOverviewPaneController implements Observer {
         metroFacade.attach(MetroEventsEnum.OPEN_METROSTATION, this);
         metroFacade.attach(MetroEventsEnum.BUY_METROCARD, this);
         metroFacade.attach(MetroEventsEnum.BUY_METROCARDS_TICKETS, this);
+        metroFacade.attach(MetroEventsEnum.SCAN_METROGATE, this);
     }
 
     public void setView(MetroCardOverviewPane view) {

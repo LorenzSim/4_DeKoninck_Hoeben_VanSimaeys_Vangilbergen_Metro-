@@ -18,6 +18,13 @@ public class MetroStation {
         }
     }
 
+    public String getLastAction(int gateNumber) {
+        return metroGates.get(gateNumber).getLastAction();
+    }
+    public int getScannedTickets(int gateNumber) {
+        return metroGates.get(gateNumber).getScannedCards();
+    }
+
     public void activate(int metroGateNumber){
         metroGates.get(metroGateNumber).activate();
     }

@@ -9,6 +9,7 @@ public class MetroGate {
 
     private int scannedCards;
     private final int gateNumber;
+    private String lastAction;
     private MetroGateState currentState;
     private final Inactive inactiveState;
     private final Open openState;
@@ -19,13 +20,13 @@ public class MetroGate {
         this.openState = new Open(this);
         this.closedState = new Closed(this);
         this.gateNumber = gateNumber;
+        setCurrentState(inactiveState);
         scannedCards = 0;
     }
 
     public void setCurrentState(MetroGateState currentState) {
         this.currentState = currentState;
     }
-
     public void setInactiveState() {
         setCurrentState(inactiveState);
     }
@@ -47,6 +48,15 @@ public class MetroGate {
     public void walkThroughGate() {
         currentState.walkThroughGate();
     }
+
+    public String getLastAction() {
+        return lastAction;
+    }
+
+    public void setLastAction(String lastAction) {
+        this.lastAction = lastAction;
+    }
+
     public void increaseScannedCards() {
         ++scannedCards;
     }

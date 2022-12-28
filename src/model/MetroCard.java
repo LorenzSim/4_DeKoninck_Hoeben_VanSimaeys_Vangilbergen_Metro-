@@ -21,6 +21,10 @@ public class MetroCard {
         }
         return false;
     }
+    public void useTicket() {
+        ++aantalGebruikt;
+        --aantalBeschikbaar;
+    }
 
     public boolean isExpired() {
         LocalDate now =  LocalDate.now();

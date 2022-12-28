@@ -12,16 +12,21 @@ public class Closed extends MetroGateState{
 
     @Override
     public void scanMetroGate(MetroCard metroCard) {
-        if (!metroCard.isExpired() && metroCard.getAantalBeschikbaar() > 0){
-            metroGate.increaseScannedCards();
-            metroGate.setOpenState();
+        if (metroCard.isExpired()) {
+            metroGate.setLastAction(String.format("Card %s is expired", metroCard.getId())); return;
         }
-
+        if (metroCard.getAantalBeschikbaar() == 0){
+            metroGate.setLastAction(String.format("Card %s has no tickets", metroCard.getId())); return;
+        }
+        metroCard.useTicket();
+        metroGate.increaseScannedCards();
+        metroGate.setOpenState();
+        metroGate.setLastAction(String.format("Card %s scanned", metroCard.getId()));
     }
 
     @Override
     public void activate() {
-        throw new IllegalStateException(String.format("Gate %d is already active!", metroGate.getGateNumber()));
+        throw new IllegalStateException(String.format("Gate %d is already activated!", metroGate.getGateNumber()));
     }
 
     @Override

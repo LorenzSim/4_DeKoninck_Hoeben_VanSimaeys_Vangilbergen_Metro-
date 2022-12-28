@@ -5,6 +5,7 @@ import controller.MetroTicketViewController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -21,8 +22,8 @@ import java.util.List;
 
 public class MetroTicketView {
 	private final Stage stage = new Stage();
- 	private ChoiceBox<Integer> idSelector = new ChoiceBox<>();
- 	private TextField numberOfRidesField = new TextField();
+ 	private final ChoiceBox<Integer> idSelector = new ChoiceBox<>();
+ 	private final TextField numberOfRidesField = new TextField();
 	private Text newMetroCardMessage = new Text(), totalPrice = new Text(), discountMessage = new Text();
 	private ToggleGroup ageSelectorGroup = new ToggleGroup();
 	private RadioButton min26Button = new RadioButton("Younger than 26 years");
@@ -38,8 +39,9 @@ public class MetroTicketView {
 		stage.setX(5);
 		stage.setY(5);
 
-		Group root = new Group();
-		TilePane newMetroCardTilePane = new TilePane();
+		VBox container = new VBox();
+		container.setPadding(new Insets(0,10,0,10));
+		container.setSpacing(10);
 
 		Button newMetroCardButton = new Button("New metro card");
 		EventHandler<ActionEvent> event = e -> {
@@ -48,33 +50,39 @@ public class MetroTicketView {
 		};
 		newMetroCardButton.setOnAction(event);
 
+		HBox selectMetroCardBox = new HBox();
 		Label selectMetroCartText = new Label("Select metro card: ");
+		selectMetroCardBox.getChildren().addAll(selectMetroCartText, idSelector);
 
+		HBox numberOfRidesBox = new HBox();
 		Label numberOfRidesText = new Label("Number of rides: ");
-		numberOfRidesText.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!newValue.matches("\\d*")) {
-				numberOfRidesText.setText(newValue.replaceAll("[^\\d]", ""));
-			}
-		});
+		numberOfRidesBox.getChildren().addAll(numberOfRidesText, numberOfRidesField);
 
+		HBox selectAgeBox = new HBox();
+		selectAgeBox.setSpacing(10);
 		min26Button.setToggleGroup(ageSelectorGroup);
 		plus64Button.setToggleGroup(ageSelectorGroup);
 		age26To64Button.setToggleGroup(ageSelectorGroup);
 		age26To64Button.setSelected(true);
 
-		Button addRidesButton = new Button("Add rides to cart");
+		selectAgeBox.getChildren().addAll(min26Button, plus64Button, age26To64Button);
 
-		Label totalPriceLabel = new Label("Total price: ");
+		Button addRidesButton = new Button("Add rides to cart");
 		EventHandler<ActionEvent> addRidesEvent = e -> {
 			int metroCardID = idSelector.getValue();
 			int numberOfRides = Integer.parseInt(numberOfRidesField.getText());
 			boolean isStudent = studentCheckBox.isSelected();
 			boolean isYoungerThan26 = min26Button.isSelected();
 			boolean isOlderThan64 = plus64Button.isSelected();
-		 	controller.addRidesToCart(metroCardID, numberOfRides, isYoungerThan26, isStudent, isOlderThan64);
+			controller.addRidesToCart(metroCardID, numberOfRides, isYoungerThan26, isStudent, isOlderThan64);
 		};
 		addRidesButton.setOnAction(addRidesEvent);
 
+		HBox totalPriceBox =new HBox();
+		Label totalPriceLabel = new Label("Total price: ");
+		totalPriceBox.getChildren().addAll(totalPriceLabel, totalPrice);
+
+		HBox requestBox =new HBox();
 		Button confirmRequestButton = new Button("Confirm request");
 		EventHandler<ActionEvent> confirmRequestEvent = e -> {
 			int metroCardId = idSelector.getValue();
@@ -84,21 +92,16 @@ public class MetroTicketView {
 			resetView();
 		};
 		confirmRequestButton.setOnAction(confirmRequestEvent);
-
 		Button cancelRequestButton = new Button("Cancel request");
 		EventHandler<ActionEvent> cancelRequestEvent = e -> {
 			resetView();
 		};
 		cancelRequestButton.setOnAction(cancelRequestEvent);
+		requestBox.getChildren().addAll(confirmRequestButton, cancelRequestButton);
 
-		newMetroCardTilePane.getChildren().addAll(newMetroCardButton, newMetroCardMessage, selectMetroCartText, idSelector, numberOfRidesText, numberOfRidesField, studentCheckBox,min26Button, age26To64Button, plus64Button, addRidesButton, totalPriceLabel, totalPrice, discountMessage, confirmRequestButton, cancelRequestButton);
-		newMetroCardTilePane.setTileAlignment(Pos.TOP_LEFT);
-		newMetroCardTilePane.setOrientation(Orientation.VERTICAL);
-		newMetroCardTilePane.setHgap(10);
-		newMetroCardTilePane.setVgap(10);
+		container.getChildren().addAll(newMetroCardButton, newMetroCardMessage, selectMetroCardBox, numberOfRidesBox, studentCheckBox, selectAgeBox, addRidesButton, totalPriceBox, discountMessage, requestBox);
 
-		root.getChildren().addAll(newMetroCardTilePane);
-		Scene scene = new Scene(root, 650, 350);
+		Scene scene = new Scene(container, 650, 350);
 		stage.setScene(scene);
 		stage.sizeToScene();
 		stage.show();
