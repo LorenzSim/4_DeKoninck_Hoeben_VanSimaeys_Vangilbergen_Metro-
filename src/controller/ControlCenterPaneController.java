@@ -24,6 +24,10 @@ public class ControlCenterPaneController implements Observer {
         controlCenterPane.updateNumberOfSoldTickets(metroFacade.getAmountSold());
     }
 
+    public void createAlert(String alertMessage) {
+
+    }
+
     public void openMetroStation() {
         metroFacade.openMetroStation();
     }

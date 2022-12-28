@@ -15,19 +15,19 @@ public class MetroCard {
     }
 
     public boolean addRides(int rides) {
-        if (isValid()) {
+        if (!isExpired()) {
             aantalBeschikbaar += rides;
             return true;
         }
         return false;
     }
 
-    public boolean isValid() {
+    public boolean isExpired() {
         LocalDate now =  LocalDate.now();
         int currentYear = now.getYear();
         int currentMonth = now.getMonthValue();
 
-        return currentYear == jaartal || currentYear - jaartal == 1 && currentMonth <= maand;
+        return !(currentYear == jaartal || currentYear - jaartal == 1 && currentMonth <= maand);
     }
 
     public int getId() {

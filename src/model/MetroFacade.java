@@ -14,6 +14,7 @@ import java.util.*;
 public class MetroFacade implements Subject {
 
     private final MetroCardDatabase metrocardDatabase = new MetroCardDatabase();
+    private final MetroStation metroStation = new MetroStation();
     private final Map<MetroEventsEnum, List<Observer>> observers;
 
     public MetroFacade() {
@@ -81,4 +82,22 @@ public class MetroFacade implements Subject {
         }
         return Arrays.asList(properties.getProperty("PRICEDISCOUNTS").split(","));
     }
+
+    public void activate(int gateNumber) {
+        metroStation.activate(gateNumber);
+    }
+
+    public void scanMetroGate(int metroCardId, int gateNumber) {
+        metroStation.scanMetroGate(metrocardDatabase.getMetroCard(metroCardId), gateNumber);
+    }
+
+    public void walkThroughGate(int gateNumber) {
+        metroStation.walkThroughGate(gateNumber);
+    }
+
+    public void deactivate(int gateNumber) {
+        metroStation.deactivate(gateNumber);
+    }
+
+
 }

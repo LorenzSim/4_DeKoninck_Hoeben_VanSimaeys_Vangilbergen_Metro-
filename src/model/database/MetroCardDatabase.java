@@ -10,7 +10,6 @@ import java.util.Map;
 public class MetroCardDatabase {
 
     private Map<Integer, MetroCard> cards;
-
     private LoadSaveStrategy<Integer, MetroCard> loadSaveStrategy;
     private int amountSold;
     private double totalPriceSold;
