@@ -10,7 +10,7 @@ public class FrequentTravellerDiscount extends TicketPriceDiscountDecorator {
     @Override
     public String getPriceText() {
         String result = wrappedTicketPrice.getPriceText();
-        if (wrappedTicketPrice.getMetroCard().getAantalGebruikt() > 50) {
+        if (getMetroCard().getAantalGebruikt() > 50) {
             result += " - € 0,20 frequent traveler discount";
         }
         return result;
@@ -19,7 +19,7 @@ public class FrequentTravellerDiscount extends TicketPriceDiscountDecorator {
     @Override
     public double getPrice() {
         double result = wrappedTicketPrice.getPrice();
-        if (wrappedTicketPrice.getMetroCard().getAantalGebruikt() > 50) {
+        if (getMetroCard().getAantalGebruikt() > 50) {
             result -= 0.20;
         }
         return result;

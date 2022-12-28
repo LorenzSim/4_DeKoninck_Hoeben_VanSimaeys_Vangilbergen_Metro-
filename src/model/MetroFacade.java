@@ -1,6 +1,5 @@
 package model;
 
-import model.TicketPriceDecorator.TicketPriceDiscountEnum;
 import model.database.MetroCardDatabase;
 import model.database.loadSaveStrategies.LoadSaveStrategy;
 import model.database.loadSaveStrategies.LoadSaveStrategyFactory;
@@ -60,11 +59,15 @@ public class MetroFacade implements Subject {
         notifyObservers(MetroEventsEnum.BUY_METROCARD);
     }
     public void buyMetroCardTickets(int metroCardId, double totalPrice, int numberOfRides) {
-        MetroCard metroCard = getMetroCard(metroCardId);
-        if (metroCard.isValid()) {
-            metroCard.addRides(numberOfRides);
+        if (metrocardDatabase.addTicketsToCard(metroCardId, numberOfRides, totalPrice)){
             notifyObservers(MetroEventsEnum.BUY_METROCARDS_TICKETS);
         }
+    }
+    public int getAmountSold() {
+        return metrocardDatabase.getAmountSold();
+    }
+    public double getTotalPriceSold() {
+        return metrocardDatabase.getTotalPriceSold();
     }
 
     public List<String> getMetroTicketDiscountList() {

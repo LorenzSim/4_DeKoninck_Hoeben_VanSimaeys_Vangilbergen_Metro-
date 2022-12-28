@@ -14,8 +14,12 @@ public class MetroCard {
         setAantalGebruikt(aantalGebruikt);
     }
 
-    public void addRides(int rides) {
-        aantalBeschikbaar += rides;
+    public boolean addRides(int rides) {
+        if (isValid()) {
+            aantalBeschikbaar += rides;
+            return true;
+        }
+        return false;
     }
 
     public boolean isValid() {

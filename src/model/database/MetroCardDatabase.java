@@ -5,7 +5,6 @@ import model.database.loadSaveStrategies.LoadSaveStrategy;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
 
 public class MetroCardDatabase {
@@ -13,9 +12,12 @@ public class MetroCardDatabase {
     private Map<Integer, MetroCard> cards;
 
     private LoadSaveStrategy<Integer, MetroCard> loadSaveStrategy;
+    private int amountSold;
+    private double totalPriceSold;
 
     public MetroCardDatabase() {
-
+        amountSold = 0;
+        totalPriceSold = 0;
     }
     public void load() {
         cards = loadSaveStrategy.load();
@@ -41,11 +43,27 @@ public class MetroCardDatabase {
         cards.put(id, metroCard);
     }
 
+    public boolean addTicketsToCard(int metroCardId, int amount, double price) {
+        boolean ridesAreAddedToCard = cards.get(metroCardId).addRides(amount);
+        if (ridesAreAddedToCard) {
+            this.amountSold += amount;
+            this.totalPriceSold += price;
+        }
+        return ridesAreAddedToCard;
+    }
+
     public MetroCard getMetroCard(int id) {
         return cards.get(id);
     }
+    public int getAmountSold() {
+        return amountSold;
+    }
 
-     private int generateId() {
+    public double getTotalPriceSold() {
+        return totalPriceSold;
+    }
+
+    private int generateId() {
         int result = -1;
          for (Integer id : cards.keySet()) {
              if (id > result) {

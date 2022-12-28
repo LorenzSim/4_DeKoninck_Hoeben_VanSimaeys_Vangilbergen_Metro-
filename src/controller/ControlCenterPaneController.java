@@ -20,7 +20,8 @@ public class ControlCenterPaneController implements Observer {
 
     @Override
     public void update() {
-
+        controlCenterPane.upDateTotalPriceSold(metroFacade.getTotalPriceSold());
+        controlCenterPane.updateNumberOfSoldTickets(metroFacade.getAmountSold());
     }
 
     public void openMetroStation() {

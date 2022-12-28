@@ -116,6 +116,8 @@ public class MetroTicketView {
 	}
 
 	public void resetView() {
+		newMetroCardMessage.setText("");
+		discountMessage.setText("");
 		idSelector.setValue(null);
 		numberOfRidesField.setText("0");
 		studentCheckBox.setSelected(false);
