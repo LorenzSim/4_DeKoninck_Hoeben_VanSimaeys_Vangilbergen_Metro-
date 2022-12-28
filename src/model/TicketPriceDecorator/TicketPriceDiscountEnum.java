@@ -1,17 +1,17 @@
 package model.TicketPriceDecorator;
 
 public enum TicketPriceDiscountEnum {
-    AGE64PLUSDISCOUNT("Age64PlusDiscount"),
-    CHRISTMASLEAVEDISCOUNT("ChristmasLeaveDiscount"),
-    STUDENTDISCOUNT("StudentDiscount"),
-    FREQUENTTRAVELLERDISCOUNT("FrequentTravellerDiscount");
+    AGE64PLUSDISCOUNT("model.TicketPriceDecorator.Age64PlusDiscount"),
+    CHRISTMASLEAVEDISCOUNT("model.TicketPriceDecorator.ChristmasLeaveDiscount"),
+    STUDENTDISCOUNT("model.TicketPriceDecorator.StudentDiscount"),
+    FREQUENTTRAVELLERDISCOUNT("model.TicketPriceDecorator.FrequentTravellerDiscount");
 
-    String stringValue;
-    TicketPriceDiscountEnum(String stringValue) {
-        this.stringValue = stringValue;
+    private String classFileName;
+    TicketPriceDiscountEnum(String getClassFileName) {
+        this.classFileName = getClassFileName;
     }
 
-    public String getStringValue() {
-        return stringValue;
+    public String getGetClassFileName() {
+        return classFileName;
     }
 }

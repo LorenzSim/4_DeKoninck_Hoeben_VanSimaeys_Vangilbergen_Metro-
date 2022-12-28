@@ -2,19 +2,26 @@ package model.TicketPriceDecorator;
 
 public class StudentDiscount extends TicketPriceDiscountDecorator {
 
-    private final TicketPrice wrappedTicketPrice;
 
     public StudentDiscount(TicketPrice ticketPrice) {
-        this.wrappedTicketPrice = ticketPrice;
+        super(ticketPrice);
     }
 
     @Override
     public String getPriceText() {
-        return wrappedTicketPrice.getPriceText() + " - € 0,25 student discount";
+        String result = wrappedTicketPrice.getPriceText();
+        if (this.wrappedTicketPrice.isStudent()){
+            result +=  " - € 0,25 student discount";
+        }
+        return result;
     }
 
     @Override
     public double getPrice() {
-        return wrappedTicketPrice.getPrice() - 0.25;
+        double result = wrappedTicketPrice.getPrice();
+        if (this.wrappedTicketPrice.isStudent()) {
+            result -= 0.25;
+        }
+        return result;
     }
 }

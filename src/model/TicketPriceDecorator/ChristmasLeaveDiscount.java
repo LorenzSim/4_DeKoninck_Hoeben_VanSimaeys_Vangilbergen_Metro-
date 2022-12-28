@@ -1,20 +1,18 @@
 package model.TicketPriceDecorator;
 
 public class ChristmasLeaveDiscount extends TicketPriceDiscountDecorator {
-    private final TicketPrice wrappedTicketPrice;
-
     public ChristmasLeaveDiscount(TicketPrice ticketPrice) {
-        this.wrappedTicketPrice = ticketPrice;
+        super(ticketPrice);
     }
 
     @Override
     public double getPrice() {
-        return wrappedTicketPrice.getPrice() - 0.10;
+        return this.wrappedTicketPrice.getPrice() - 0.10;
     }
 
     @Override
     public String getPriceText() {
-        return wrappedTicketPrice.getPriceText() + " - €0,10 Christmas leave discount";
+        return this.wrappedTicketPrice.getPriceText() + " - €0,10 Christmas leave discount";
     }
 }
 

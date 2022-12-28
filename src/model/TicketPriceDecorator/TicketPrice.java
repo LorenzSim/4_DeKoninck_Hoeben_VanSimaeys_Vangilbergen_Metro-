@@ -1,9 +1,12 @@
 package model.TicketPriceDecorator;
 
+import model.MetroCard;
+
 public abstract class TicketPrice {
     private boolean is24Min;
     private boolean is64Plus;
     private boolean isStudent;
+    private MetroCard metroCard;
 
     public boolean is24Min() {
         return is24Min;
@@ -27,6 +30,14 @@ public abstract class TicketPrice {
 
     public void setStudent(boolean student) {
         isStudent = student;
+    }
+
+    public MetroCard getMetroCard() {
+        return metroCard;
+    }
+
+    public void setMetroCard(MetroCard metroCard) {
+        this.metroCard = metroCard;
     }
 
     public abstract String getPriceText();

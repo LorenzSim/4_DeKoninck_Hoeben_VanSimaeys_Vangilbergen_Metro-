@@ -2,19 +2,26 @@ package model.TicketPriceDecorator;
 
 public class FrequentTravellerDiscount extends TicketPriceDiscountDecorator {
 
-    private final TicketPrice wrappedTicketPrice;
 
     public FrequentTravellerDiscount(TicketPrice ticketPrice) {
-        this.wrappedTicketPrice = ticketPrice;
+        super(ticketPrice);
     }
 
     @Override
     public String getPriceText() {
-        return wrappedTicketPrice.getPriceText() + " - € 0,20 frequent traveler discount";
+        String result = wrappedTicketPrice.getPriceText();
+        if (wrappedTicketPrice.getMetroCard().getAantalGebruikt() > 50) {
+            result += " - € 0,20 frequent traveler discount";
+        }
+        return result;
     }
 
     @Override
     public double getPrice() {
-        return wrappedTicketPrice.getPrice() - 0.20;
+        double result = wrappedTicketPrice.getPrice();
+        if (wrappedTicketPrice.getMetroCard().getAantalGebruikt() > 50) {
+            result -= 0.20;
+        }
+        return result;
     }
 }
