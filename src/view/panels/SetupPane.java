@@ -30,7 +30,7 @@ public class SetupPane extends GridPane{
         lSSOptions.setTranslateY(50);
         lSSOptions.getItems().setAll("EXCEL", "TEKST");
 
-        Button saveButton = new Button("Save");
+        Button saveButton = new Button("Save file type");
         saveButton.setTranslateX(20);
         saveButton.setTranslateY(100);
 
