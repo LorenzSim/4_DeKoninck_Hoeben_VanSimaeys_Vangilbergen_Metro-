@@ -52,6 +52,7 @@ public class MetroTicketView {
 			controller.buyMetroCard();
 			newMetroCardMessage.setText("Metro card price is € 15 - 2 free rides included");
 		};
+
 		newMetroCardButton.setOnAction(event);
 		Label selectMetroCartText = new Label("Select metro card: ");
 
