@@ -22,6 +22,9 @@ public class TicketPriceFactory {
     public TicketPrice createTicketPrice(boolean is24Min, boolean is64Plus, boolean isStudent, MetroCard metroCard) {
         Properties properties = new Properties();
         TicketPrice result = new BasicTicketPrice();
+        result.setIs24Min(is24Min);
+        result.setIs64Plus(is64Plus);
+        result.setStudent(isStudent);
         try {
             InputStream is = Files.newInputStream(Paths.get("src/bestanden/settings.properties"));
             properties.load(is);

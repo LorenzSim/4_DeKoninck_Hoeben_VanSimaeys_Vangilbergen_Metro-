@@ -1,5 +1,8 @@
 package model;
 
+
+import java.time.LocalDate;
+
 public class MetroCard {
     private int id, maand, jaartal, aantalBeschikbaar, aantalGebruikt;
 
@@ -13,6 +16,14 @@ public class MetroCard {
 
     public void addRides(int rides) {
         aantalBeschikbaar += rides;
+    }
+
+    public boolean isValid() {
+        LocalDate now =  LocalDate.now();
+        int currentYear = now.getYear();
+        int currentMonth = now.getMonthValue();
+
+        return currentYear == jaartal || currentYear - jaartal == 1 && currentMonth <= maand;
     }
 
     public int getId() {

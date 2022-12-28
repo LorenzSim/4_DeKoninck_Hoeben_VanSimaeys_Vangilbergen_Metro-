@@ -1,13 +1,15 @@
 package model;
 
+import model.TicketPriceDecorator.TicketPriceDiscountEnum;
 import model.database.MetroCardDatabase;
 import model.database.loadSaveStrategies.LoadSaveStrategy;
 import model.database.loadSaveStrategies.LoadSaveStrategyFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
 
 public class MetroFacade implements Subject {
@@ -48,6 +50,7 @@ public class MetroFacade implements Subject {
     public List<Integer> getMetroCardIDList() {
         return metrocardDatabase.getMetroCardIDList();
     }
+
     public MetroCard getMetroCard(int id) {
         return metrocardDatabase.getMetroCard(id);
     }
@@ -55,5 +58,24 @@ public class MetroFacade implements Subject {
     public void buyMetroCard() {
         metrocardDatabase.addMetroCard();
         notifyObservers(MetroEventsEnum.BUY_METROCARD);
+    }
+    public void buyMetroCardTickets(int metroCardId, double totalPrice, int numberOfRides) {
+        MetroCard metroCard = getMetroCard(metroCardId);
+        if (metroCard.isValid()) {
+            metroCard.addRides(numberOfRides);
+            notifyObservers(MetroEventsEnum.BUY_METROCARDS_TICKETS);
+        }
+    }
+
+    public List<String> getMetroTicketDiscountList() {
+        Properties properties = new Properties();
+        try {
+            InputStream is = Files.newInputStream(Paths.get("src/bestanden/settings.properties"));
+            properties.load(is);
+            is.close();
+        } catch (IOException e){
+            throw new RuntimeException(e);
+        }
+        return Arrays.asList(properties.getProperty("PRICEDISCOUNTS").split(","));
     }
 }

@@ -1,6 +1,5 @@
 package controller;
 
-import model.MetroCard;
 import model.MetroEventsEnum;
 import model.MetroFacade;
 import model.Observer;
@@ -32,7 +31,13 @@ public class MetroTicketViewController implements Observer {
         metroTicketView.updateMetroCardIDList(metroCardIdList);
     }
 
-    public TicketPrice calculateTotalPrice(int metroCardID, int numberOfRides, boolean is24Min, boolean isStudent, boolean isOlderThan64) {
-        return TicketPriceFactory.getInstance().createTicketPrice(is24Min, isOlderThan64, isStudent , metroFacade.getMetroCard(metroCardID));
+    public void addRidesToCart(int metroCardID, int numberOfRides, boolean is24Min, boolean isStudent, boolean isOlderThan64) {
+        TicketPrice ticketPrice = TicketPriceFactory.getInstance().createTicketPrice(is24Min, isOlderThan64, isStudent, metroFacade.getMetroCard(metroCardID));
+        metroTicketView.setTotalPrice(String.format("€ %2.2f", ticketPrice.getPrice() * numberOfRides));
+        metroTicketView.setDiscountText(ticketPrice.getPriceText());
+    }
+
+    public void buyMetroCardTickets(int metroCardId, double totalPrice, int numberOfRides) {
+        metroFacade.buyMetroCardTickets(metroCardId, totalPrice, numberOfRides);
     }
 }

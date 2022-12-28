@@ -1,6 +1,8 @@
 package controller;
 
+import model.MetroEventsEnum;
 import model.MetroFacade;
+import model.Observer;
 import model.TicketPriceDecorator.TicketPriceDiscountEnum;
 import model.database.loadSaveStrategies.LoadSaveStrategyEnum;
 import view.panels.SetupPane;
@@ -10,15 +12,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
-public class SetupPaneController {
+public class SetupPaneController implements Observer {
 
     private final MetroFacade metroFacade;
     private SetupPane setupPane;
 
     public SetupPaneController(MetroFacade metroFacade) {
         this.metroFacade = metroFacade;
+        this.metroFacade.attach(MetroEventsEnum.OPEN_METROSTATION, this);
     }
 
     public void setView(SetupPane view) {
@@ -66,4 +70,8 @@ public class SetupPaneController {
         }
     }
 
+    @Override
+    public void update() {
+        setupPane.initDiscounts(metroFacade.getMetroTicketDiscountList());
+    }
 }

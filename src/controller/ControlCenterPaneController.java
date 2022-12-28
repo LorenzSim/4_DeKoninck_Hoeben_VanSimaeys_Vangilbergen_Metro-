@@ -1,5 +1,6 @@
 package controller;
 
+import model.MetroEventsEnum;
 import model.MetroFacade;
 import model.Observer;
 
@@ -8,6 +9,7 @@ public class ControlCenterPaneController implements Observer {
 
     public ControlCenterPaneController(MetroFacade metroFacade) {
         this.metroFacade = metroFacade;
+        metroFacade.attach(MetroEventsEnum.BUY_METROCARDS_TICKETS, this);
     }
 
     @Override
