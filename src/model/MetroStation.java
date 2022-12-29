@@ -1,5 +1,8 @@
 package model;
 
+import model.metroGateStates.Inactive;
+import model.metroGateStates.MetroGateState;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -28,7 +31,12 @@ public class MetroStation {
     }
 
     public void activate(int metroGateNumber){
-        metroGates.get(metroGateNumber).activate();
+        try {
+            metroGates.get(metroGateNumber).activate();
+        } catch (IllegalStateException e) {
+            setLastAlert(e.getMessage());
+            throw e;
+        }
     }
 
     public void scanMetroGate(MetroCard metroCard, int metroGateNumber) {
@@ -36,7 +44,7 @@ public class MetroStation {
             metroGates.get(metroGateNumber).scanMetroGate(metroCard);
         } catch (IllegalStateException e) {
             setLastAlert(e.getMessage());
-            throw new IllegalStateException(e.getMessage());
+            throw e;
         }
     }
 
@@ -45,12 +53,17 @@ public class MetroStation {
             metroGates.get(metroGateNumber).walkThroughGate();
         } catch (IllegalStateException e) {
             setLastAlert(e.getMessage());
-            throw new IllegalStateException(e.getMessage());
+            throw e;
         }
     }
 
     public void deactivate(int metroGateNumber) {
-        metroGates.get(metroGateNumber).deactivate();
+        try {
+            metroGates.get(metroGateNumber).deactivate();
+        } catch (IllegalStateException e) {
+            setLastAlert(e.getMessage());
+            throw e;
+        }
     }
 
     public String getLastAlert() {
@@ -59,7 +72,14 @@ public class MetroStation {
         return result;
     }
 
+    public void closeStation() {
+        metroGates.forEach((id, gate) -> gate.setInactiveState());
+    }
+
     public void setLastAlert(String lastAlert) {
         this.lastAlert = lastAlert;
+    }
+    public boolean isGateActive(int gateNumber) {
+        return metroGates.get(gateNumber).isActive();
     }
 }

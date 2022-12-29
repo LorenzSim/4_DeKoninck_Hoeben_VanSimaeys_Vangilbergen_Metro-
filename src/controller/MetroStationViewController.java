@@ -17,6 +17,7 @@ public class MetroStationViewController implements Observer {
         metroFacade.addObserver(MetroEventsEnum.BUY_METROCARD, this);
         metroFacade.addObserver(MetroEventsEnum.ACTIVATE_METROGATE, this);
         metroFacade.addObserver(MetroEventsEnum.DEACTIVATE_METROGATE, this);
+        metroFacade.addObserver(MetroEventsEnum.CLOSE_METROSTATION, this);
     }
 
     public void setView(MetroStationView view) {
@@ -25,11 +26,16 @@ public class MetroStationViewController implements Observer {
 
     @Override
     public void update() {
-        List<Integer> IDs = metroFacade.getMetroCardIDList();
-        metroStationView.updateMetroCardIDList(IDs);
-        updateLastAction(1, metroFacade.getLastAction(1));
-        updateLastAction(2, metroFacade.getLastAction(2));
-        updateLastAction(3, metroFacade.getLastAction(3));
+        if (metroFacade.isStationIsOpen()){
+            List<Integer> IDs = metroFacade.getMetroCardIDList();
+            metroStationView.updateMetroCardIDList(IDs);
+            updateLastAction(1, metroFacade.getLastAction(1));
+            updateLastAction(2, metroFacade.getLastAction(2));
+            updateLastAction(3, metroFacade.getLastAction(3));
+        }
+        setGateActive(1, metroFacade.isGateActive(1));
+        setGateActive(2, metroFacade.isGateActive(2));
+        setGateActive(3, metroFacade.isGateActive(3));
     }
 
     public void scanMetroCard(int metroCardId, int gateId) {
@@ -44,5 +50,9 @@ public class MetroStationViewController implements Observer {
 
     private void updateLastAction(int gateNumber, String lastAction) {
         metroStationView.setLastAction(gateNumber, lastAction);
+    }
+
+    private void setGateActive(int gateNumber, boolean isOpen) {
+        metroStationView.setGateActive(gateNumber, isOpen);
     }
 }

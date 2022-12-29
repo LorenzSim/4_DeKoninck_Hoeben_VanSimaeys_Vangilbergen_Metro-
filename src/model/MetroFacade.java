@@ -12,8 +12,10 @@ public class MetroFacade implements Subject {
     private final MetroCardDatabase metrocardDatabase = new MetroCardDatabase();
     private final MetroStation metroStation = new MetroStation();
     private final Map<MetroEventsEnum, List<Observer>> observers;
+    private boolean stationIsOpen;
 
     public MetroFacade() {
+        stationIsOpen = false;
         observers = new HashMap<>();
         for (MetroEventsEnum event : MetroEventsEnum.values()) {
             observers.put(event, new ArrayList<>());
@@ -31,11 +33,15 @@ public class MetroFacade implements Subject {
     public void notifyObservers(MetroEventsEnum eventType) {
         observers.get(eventType).forEach(Observer::update);
     }
+    public boolean isStationIsOpen() {
+        return this.stationIsOpen;
+    }
 
     public void openMetroStation() {
         LoadSaveStrategy<Integer, MetroCard> strategy = LoadSaveStrategyFactory.getInstance().createLoadSaveStrategy() ;
         metrocardDatabase.setLoadSaveStrategy(strategy);
         metrocardDatabase.load();
+        this.stationIsOpen = true;
         notifyObservers(MetroEventsEnum.OPEN_METROSTATION);
     }
     public List<MetroCard> getMetroCardList() {
@@ -66,8 +72,13 @@ public class MetroFacade implements Subject {
     }
 
     public void activate(int gateNumber) {
-        metroStation.activate(gateNumber);
-        notifyObservers(MetroEventsEnum.ACTIVATE_METROGATE);
+        try {
+            metroStation.activate(gateNumber);
+            notifyObservers(MetroEventsEnum.ACTIVATE_METROGATE);
+        } catch (IllegalStateException e) {
+            notifyObservers(MetroEventsEnum.NEW_ALERT);
+        }
+
     }
 
     public void scanMetroGate(int metroCardId, int gateNumber) {
@@ -90,8 +101,13 @@ public class MetroFacade implements Subject {
     }
 
     public void deactivate(int gateNumber) {
-        metroStation.deactivate(gateNumber);
-        notifyObservers(MetroEventsEnum.DEACTIVATE_METROGATE);
+        try {
+            metroStation.deactivate(gateNumber);
+            notifyObservers(MetroEventsEnum.DEACTIVATE_METROGATE);
+        } catch (IllegalStateException e) {
+            notifyObservers(MetroEventsEnum.NEW_ALERT);
+        }
+
     }
     public String getLastAction(int gateId) {
         return metroStation.getLastAction(gateId);
@@ -101,6 +117,9 @@ public class MetroFacade implements Subject {
     }
     public int getScannedCards(int gateNumber) {
         return metroStation.getScannedTickets(gateNumber);
+    }
+    public boolean isGateActive(int gateNumber) {
+        return metroStation.isGateActive(gateNumber);
     }
 
     public List<String> getMetroTicketDiscountList() {

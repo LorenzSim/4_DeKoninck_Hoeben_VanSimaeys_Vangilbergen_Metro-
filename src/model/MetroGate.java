@@ -67,8 +67,8 @@ public class MetroGate {
     public int getGateNumber() {
         return gateNumber;
     }
-    public MetroGateState getCurrentState() {
-        return currentState;
+    public boolean isActive() {
+        return !currentState.equals(inactiveState);
     }
 
 }

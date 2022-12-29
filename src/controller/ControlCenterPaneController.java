@@ -14,6 +14,7 @@ public class ControlCenterPaneController implements Observer {
         metroFacade.addObserver(MetroEventsEnum.BUY_METROCARDS_TICKETS, this);
         metroFacade.addObserver(MetroEventsEnum.SCAN_METROGATE, this);
         metroFacade.addObserver(MetroEventsEnum.NEW_ALERT, this);
+        metroFacade.addObserver(MetroEventsEnum.CLOSE_METROSTATION, this);
     }
 
     public void setView(ControlCenterPane controlCenterPane) {
@@ -22,6 +23,13 @@ public class ControlCenterPaneController implements Observer {
 
     @Override
     public void update() {
+        if (!metroFacade.isStationIsOpen()){
+            controlCenterPane.deactivateGate(1);
+            controlCenterPane.deactivateGate(2);
+            controlCenterPane.deactivateGate(3);
+            return;
+        }
+
         controlCenterPane.upDateTotalPriceSold(metroFacade.getTotalPriceSold());
         controlCenterPane.updateNumberOfSoldTickets(metroFacade.getAmountSold());
         updateScannedTickets();
@@ -32,21 +40,12 @@ public class ControlCenterPaneController implements Observer {
     }
 
     public void activate(int gateNumber) {
-        try {
-            metroFacade.activate(gateNumber);
-
-        } catch (IllegalStateException e){
-            createAlert(e.getMessage());
-        }
+        metroFacade.activate(gateNumber);
     }
 
     public void deactivate(int gateNumber) {
-        try {
-            metroFacade.deactivate(gateNumber);
-            controlCenterPane.deactivateGate(gateNumber);
-        } catch (IllegalStateException e) {
-            createAlert(e.getMessage());
-        }
+        metroFacade.deactivate(gateNumber);
+        controlCenterPane.deactivateGate(gateNumber);
     }
 
     private void updateScannedTickets() {
@@ -57,7 +56,7 @@ public class ControlCenterPaneController implements Observer {
 
 
 
-    public void createAlert(String alertMessage) {
+    private void createAlert(String alertMessage) {
         controlCenterPane.addAlert(alertMessage);
     }
 

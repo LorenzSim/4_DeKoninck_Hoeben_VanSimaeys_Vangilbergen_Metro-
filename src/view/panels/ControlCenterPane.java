@@ -19,6 +19,7 @@ public class ControlCenterPane extends GridPane {
     private final TextArea alerts;
     private final Background orangeBackground = new Background(new BackgroundFill(Color.ORANGE, null, null));
     private final Background whiteBackground = new Background(new BackgroundFill(Color.WHITE, null, null));
+    Button closeMetrostationButton;
 
 
     public ControlCenterPane(ControlCenterPaneController controller) {
@@ -31,7 +32,7 @@ public class ControlCenterPane extends GridPane {
         EventHandler<ActionEvent> event = e -> {
             controller.openMetroStation();
             getChildren().remove(openMetrostationButton);
-            getChildren().add(container);
+            getChildren().addAll(container);
         };
         openMetrostationButton.setOnAction(event);
 
@@ -77,7 +78,7 @@ public class ControlCenterPane extends GridPane {
         alerts.setScrollTop(Double.MAX_VALUE);
         alertsBox.getChildren().addAll(alerts);
 
-        container.getChildren().addAll(ticketMonitoring, gateMonitoring,AlertText, alertsBox);
+        container.getChildren().addAll(ticketMonitoring, gateMonitoring,AlertText, alertsBox, closeMetrostationButton);
         getChildren().addAll(openMetrostationButton);
     }
 
@@ -103,6 +104,7 @@ public class ControlCenterPane extends GridPane {
         gate.getChildren().addAll(title, activateButton, deactivateButton, scannedCardText,scannedCards);
         return gate;
     }
+
 
     public void updateScannedTickets(int gateNumber, int scannedTickets) {
         switch (gateNumber) {

@@ -10,19 +10,26 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.MetroFacade;
 
 import java.util.List;
 
 public class MetroStationView {
 	
 	private final Stage stage = new Stage();
+	HBox gateContainer = new HBox();
+
 	private VBox gate1, gate2 ,gate3;
+
+	private final Background orangeBackground = new Background(new BackgroundFill(Color.ORANGE, null, null));
+	private final Background whiteBackground = new Background(new BackgroundFill(Color.WHITE, null, null));
 
 	public MetroStationView(MetroStationViewController controller){
 		controller.setView(this);
@@ -39,7 +46,6 @@ public class MetroStationView {
 				"-fx-border-color: grey;";
 
 		Group root = new Group();
-		HBox gateContainer = new HBox();
 		gate1 = createGate(1, controller);
 		gate1.setStyle(cssLayout);
 		gate2 = createGate(2, controller);
@@ -104,6 +110,37 @@ public class MetroStationView {
 				((Text) gate3.getChildren().get(5)).setText(actionMessage);
 				break;
 		}
+	}
+
+	public void setGateActive(int gateNumber, boolean open) {
+		VBox gate = null;
+		switch (gateNumber) {
+			case 1:
+				gate = (VBox) gateContainer.getChildren().get(0);
+				break;
+			case 2:
+				gate = (VBox) gateContainer.getChildren().get(1);
+				break;
+			case 3:
+				gate = (VBox) gateContainer.getChildren().get(2);
+				break;
+		}
+		if (open) enableGate(gate);
+		else disableGate(gate);
+	}
+
+	private void enableGate(VBox gate) {
+		gate.getChildren().get(2).setDisable(false);
+		gate.getChildren().get(3).setDisable(false);
+		gate.getChildren().get(4).setDisable(false);
+		gate.setBackground(whiteBackground);
+	}
+
+	private void disableGate(VBox gate) {
+		gate.getChildren().get(2).setDisable(true);
+		gate.getChildren().get(3).setDisable(true);
+		gate.getChildren().get(4).setDisable(true);
+		gate.setBackground(orangeBackground);
 	}
 
 }
