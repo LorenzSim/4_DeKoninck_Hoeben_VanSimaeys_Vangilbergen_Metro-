@@ -11,13 +11,15 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 public class ControlCenterPane extends GridPane {
 
-    private Text amountOfSoldTickets = new Text("0"), totalPriceSold = new Text("0,0");
-    private VBox gate1, gate2, gate3;
-    private TextArea alerts;
+    private final Text amountOfSoldTickets = new Text("0"),totalPriceSold = new Text("0,0");
+    private final VBox gate1, gate2, gate3;
+    private final TextArea alerts;
+    private final Background orangeBackground = new Background(new BackgroundFill(Color.ORANGE, null, null));
+    private final Background whiteBackground = new Background(new BackgroundFill(Color.WHITE, null, null));
+
 
     public ControlCenterPane(ControlCenterPaneController controller) {
         controller.setView(this);
@@ -68,33 +70,32 @@ public class ControlCenterPane extends GridPane {
         Label AlertText = new Label("Alerts");
         AlertText.setFont(new Font("Arial", 24));
         AlertText.setPadding(new Insets(0,20,0,30));
-        HBox alertsbox = new HBox();
-        alertsbox.setPadding(new Insets(10,20,10,20));
+        HBox alertsBox = new HBox();
+        alertsBox.setPadding(new Insets(10,20,10,20));
         alerts = new TextArea();
         alerts.setEditable(false);
         alerts.setScrollTop(Double.MAX_VALUE);
-        alertsbox.getChildren().addAll(alerts);
+        alertsBox.getChildren().addAll(alerts);
 
-        container.getChildren().addAll(ticketMonitoring, gateMonitoring,AlertText, alertsbox);
+        container.getChildren().addAll(ticketMonitoring, gateMonitoring,AlertText, alertsBox);
         getChildren().addAll(openMetrostationButton);
     }
 
-    private static VBox createGate(int gateNumber , ControlCenterPaneController controller) {
+    private VBox createGate(int gateNumber , ControlCenterPaneController controller) {
         VBox gate = new VBox();
-        gate.setBackground(new Background(new BackgroundFill(Color.ORANGE, null, null)));
+        gate.setBackground(orangeBackground);
         Text title = new Text(String.format("GATE %d / INACTIVE", gateNumber));
+
         Button activateButton = new Button("Activate");
         EventHandler<ActionEvent> activateGate = event -> {
             controller.activate(gateNumber);
-            gate.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+            gate.setBackground(whiteBackground);
             title.setText(String.format("GATE %d / ACTIVE", gateNumber));
         };
         activateButton.setOnAction(activateGate);
 
         Button deactivateButton =new Button("Deactivate");
-        EventHandler<ActionEvent> deactivateGate = event -> {
-            controller.deactivate(gateNumber);
-        };
+        EventHandler<ActionEvent> deactivateGate = event -> controller.deactivate(gateNumber);
         deactivateButton.setOnAction(deactivateGate);
 
         Text scannedCardText = new Text("# scanned cards");
@@ -120,15 +121,15 @@ public class ControlCenterPane extends GridPane {
     public void deactivateGate(int gate) {
         switch (gate) {
             case 1:
-                gate1.setBackground(new Background(new BackgroundFill(Color.ORANGE, null, null)));
+                gate1.setBackground(orangeBackground);
                 ((Text) gate1.getChildren().get(0)).setText(String.format("GATE %d / INACTIVE", 1));
                 break;
             case 2:
-                gate2.setBackground(new Background(new BackgroundFill(Color.ORANGE, null, null)));
+                gate2.setBackground(orangeBackground);
                 ((Text) gate2.getChildren().get(0)).setText(String.format("GATE %d / INACTIVE", 1));
                 break;
             case 3:
-                gate3.setBackground(new Background(new BackgroundFill(Color.ORANGE, null, null)));
+                gate3.setBackground(orangeBackground);
                 ((Text) gate3.getChildren().get(0)).setText(String.format("GATE %d / INACTIVE", 1));
                 break;
         }
@@ -143,6 +144,6 @@ public class ControlCenterPane extends GridPane {
     }
 
     public void addAlert(String alert) {
-        alerts.appendText(alert + "\n");
+        alerts.setText(alert + "\n" + alerts.getText());
     }
 }

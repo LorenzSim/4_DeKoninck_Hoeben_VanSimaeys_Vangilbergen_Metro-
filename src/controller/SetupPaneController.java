@@ -17,7 +17,7 @@ public class SetupPaneController implements Observer {
 
     public SetupPaneController(MetroFacade metroFacade) {
         this.metroFacade = metroFacade;
-        this.metroFacade.attach(MetroEventsEnum.OPEN_METROSTATION, this);
+        this.metroFacade.addObserver(MetroEventsEnum.OPEN_METROSTATION, this);
     }
 
     public void setView(SetupPane view) {

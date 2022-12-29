@@ -1,43 +1,35 @@
 package view;
 
 import controller.MetroTicketViewController;
-
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.util.List;
 
 
 public class MetroTicketView {
-	private final Stage stage = new Stage();
- 	private final ChoiceBox<Integer> idSelector = new ChoiceBox<>();
+	private final ChoiceBox<Integer> idSelector = new ChoiceBox<>();
  	private final TextField numberOfRidesField = new TextField();
-	private Text newMetroCardMessage = new Text(), totalPrice = new Text(), discountMessage = new Text();
-	private ToggleGroup ageSelectorGroup = new ToggleGroup();
-	private RadioButton min26Button = new RadioButton("Younger than 26 years");
-	private RadioButton plus64Button = new RadioButton("Older than 64 years");
-	private RadioButton age26To64Button = new RadioButton("between 26 and 64 years");
- 	private CheckBox studentCheckBox = new CheckBox("higher education student?");
+	private final Text newMetroCardMessage = new Text();
+	private final Text totalPrice = new Text();
+	private final Text discountMessage = new Text();
+	private final RadioButton min26Button = new RadioButton("Younger than 26 years");
+	private final RadioButton plus64Button = new RadioButton("Older than 64 years");
+	private final RadioButton age26To64Button = new RadioButton("between 26 and 64 years");
+ 	private final CheckBox studentCheckBox = new CheckBox("higher education student?");
 
 
 	public MetroTicketView(MetroTicketViewController controller){
 		controller.setView(this);
+		Stage stage = new Stage();
 		stage.setTitle("METROTICKET VIEW");
 		stage.initStyle(StageStyle.UTILITY);
 		stage.setX(5);
@@ -64,6 +56,7 @@ public class MetroTicketView {
 
 		HBox selectAgeBox = new HBox();
 		selectAgeBox.setSpacing(10);
+		ToggleGroup ageSelectorGroup = new ToggleGroup();
 		min26Button.setToggleGroup(ageSelectorGroup);
 		plus64Button.setToggleGroup(ageSelectorGroup);
 		age26To64Button.setToggleGroup(ageSelectorGroup);

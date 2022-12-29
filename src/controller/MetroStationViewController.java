@@ -2,7 +2,6 @@ package controller;
 
 import model.MetroEventsEnum;
 import model.MetroFacade;
-import model.MetroGate;
 import model.Observer;
 import view.MetroStationView;
 
@@ -14,10 +13,10 @@ public class MetroStationViewController implements Observer {
 
     public MetroStationViewController(MetroFacade metroFacade){
         this.metroFacade = metroFacade;
-        this.metroFacade.attach(MetroEventsEnum.OPEN_METROSTATION, this);
-        metroFacade.attach(MetroEventsEnum.BUY_METROCARD, this);
-        metroFacade.attach(MetroEventsEnum.ACTIVATE_METROGATE, this);
-        metroFacade.attach(MetroEventsEnum.DEACTIVATE_METROGATE, this);
+        this.metroFacade.addObserver(MetroEventsEnum.OPEN_METROSTATION, this);
+        metroFacade.addObserver(MetroEventsEnum.BUY_METROCARD, this);
+        metroFacade.addObserver(MetroEventsEnum.ACTIVATE_METROGATE, this);
+        metroFacade.addObserver(MetroEventsEnum.DEACTIVATE_METROGATE, this);
     }
 
     public void setView(MetroStationView view) {
@@ -34,31 +33,16 @@ public class MetroStationViewController implements Observer {
     }
 
     public void scanMetroCard(int metroCardId, int gateId) {
-        try {
-            metroFacade.scanMetroGate(metroCardId, gateId);
-            updateLastAction(gateId, metroFacade.getLastAction(gateId));
-
-        } catch (IllegalStateException e) {
-            // TODO show alert
-        }
-        finally {
-            updateLastAction(gateId, metroFacade.getLastAction(gateId));
-        }
+        metroFacade.scanMetroGate(metroCardId, gateId);
+        updateLastAction(gateId, metroFacade.getLastAction(gateId));
     }
 
     public void walkThroughGate(int gateId) {
-        try {
-            metroFacade.walkThroughGate(gateId);
-            updateLastAction(gateId, metroFacade.getLastAction(gateId));
-        } catch (IllegalStateException e) {
-            // TODO show alert
-        }
-        finally {
-            updateLastAction(gateId, metroFacade.getLastAction(gateId));
-        }
+        metroFacade.walkThroughGate(gateId);
+        updateLastAction(gateId, metroFacade.getLastAction(gateId));
     }
 
-    public void updateLastAction(int gateNumber, String lastAction) {
+    private void updateLastAction(int gateNumber, String lastAction) {
         metroStationView.setLastAction(gateNumber, lastAction);
     }
 }

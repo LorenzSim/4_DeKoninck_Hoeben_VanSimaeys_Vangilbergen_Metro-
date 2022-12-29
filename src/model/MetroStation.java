@@ -6,6 +6,8 @@ import java.util.TreeMap;
 public class MetroStation {
 
     private final Map<Integer, MetroGate> metroGates;
+    private String lastAlert;
+
 
     public MetroStation() {
         this(3);
@@ -30,16 +32,34 @@ public class MetroStation {
     }
 
     public void scanMetroGate(MetroCard metroCard, int metroGateNumber) {
-        metroGates.get(metroGateNumber).scanMetroGate(metroCard);
+        try {
+            metroGates.get(metroGateNumber).scanMetroGate(metroCard);
+        } catch (IllegalStateException e) {
+            setLastAlert(e.getMessage());
+            throw new IllegalStateException(e.getMessage());
+        }
     }
 
     public void walkThroughGate(int metroGateNumber) {
-        metroGates.get(metroGateNumber).walkThroughGate();
+        try {
+            metroGates.get(metroGateNumber).walkThroughGate();
+        } catch (IllegalStateException e) {
+            setLastAlert(e.getMessage());
+            throw new IllegalStateException(e.getMessage());
+        }
     }
 
     public void deactivate(int metroGateNumber) {
         metroGates.get(metroGateNumber).deactivate();
     }
 
+    public String getLastAlert() {
+        String result = lastAlert;
+        lastAlert = null;
+        return result;
+    }
 
+    public void setLastAlert(String lastAlert) {
+        this.lastAlert = lastAlert;
+    }
 }

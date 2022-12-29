@@ -13,10 +13,10 @@ public class MetroCardOverviewPaneController implements Observer {
     private MetroCardOverviewPane metroCardOverviewPane;
     public MetroCardOverviewPaneController(MetroFacade metroFacade) {
         this.metroFacade = metroFacade;
-        metroFacade.attach(MetroEventsEnum.OPEN_METROSTATION, this);
-        metroFacade.attach(MetroEventsEnum.BUY_METROCARD, this);
-        metroFacade.attach(MetroEventsEnum.BUY_METROCARDS_TICKETS, this);
-        metroFacade.attach(MetroEventsEnum.SCAN_METROGATE, this);
+        metroFacade.addObserver(MetroEventsEnum.OPEN_METROSTATION, this);
+        metroFacade.addObserver(MetroEventsEnum.BUY_METROCARD, this);
+        metroFacade.addObserver(MetroEventsEnum.BUY_METROCARDS_TICKETS, this);
+        metroFacade.addObserver(MetroEventsEnum.SCAN_METROGATE, this);
     }
 
     public void setView(MetroCardOverviewPane view) {

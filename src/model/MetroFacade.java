@@ -4,10 +4,6 @@ import model.database.MetroCardDatabase;
 import model.database.loadSaveStrategies.LoadSaveStrategy;
 import model.database.loadSaveStrategies.LoadSaveStrategyFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -23,13 +19,12 @@ public class MetroFacade implements Subject {
             observers.put(event, new ArrayList<>());
         }
     }
-
     @Override
-    public void attach(MetroEventsEnum eventType,  Observer o) {
+    public void addObserver(MetroEventsEnum eventType, Observer o) {
         observers.get(eventType).add(o);
     }
     @Override
-    public void detach(MetroEventsEnum eventType, Observer o) {
+    public void removeObserver(MetroEventsEnum eventType, Observer o) {
         observers.get(eventType).remove(o);
     }
     @Override
@@ -43,7 +38,6 @@ public class MetroFacade implements Subject {
         metrocardDatabase.load();
         notifyObservers(MetroEventsEnum.OPEN_METROSTATION);
     }
-
     public List<MetroCard> getMetroCardList() {
         return metrocardDatabase.getMetroCardList();
     }
@@ -78,12 +72,21 @@ public class MetroFacade implements Subject {
 
     public void scanMetroGate(int metroCardId, int gateNumber) {
         MetroCard metroCard = metrocardDatabase.getMetroCard(metroCardId);
-        metroStation.scanMetroGate(metroCard, gateNumber);
-        notifyObservers(MetroEventsEnum.SCAN_METROGATE);
+        try {
+            metroStation.scanMetroGate(metroCard, gateNumber);
+            metroCard.useTicket();
+            notifyObservers(MetroEventsEnum.SCAN_METROGATE);
+        } catch (IllegalStateException e) {
+            notifyObservers(MetroEventsEnum.NEW_ALERT);
+        }
     }
 
     public void walkThroughGate(int gateNumber) {
-        metroStation.walkThroughGate(gateNumber);
+        try {
+            metroStation.walkThroughGate(gateNumber);
+        } catch (IllegalStateException e) {
+            notifyObservers(MetroEventsEnum.NEW_ALERT);
+        }
     }
 
     public void deactivate(int gateNumber) {
@@ -93,20 +96,15 @@ public class MetroFacade implements Subject {
     public String getLastAction(int gateId) {
         return metroStation.getLastAction(gateId);
     }
+    public String getLastAlert() {
+        return metroStation.getLastAlert();
+    }
     public int getScannedCards(int gateNumber) {
         return metroStation.getScannedTickets(gateNumber);
     }
 
     public List<String> getMetroTicketDiscountList() {
-        Properties properties = new Properties();
-        try {
-            InputStream is = Files.newInputStream(Paths.get("src/bestanden/settings.properties"));
-            properties.load(is);
-            is.close();
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
-        return Arrays.asList(properties.getProperty("PRICEDISCOUNTS").split(","));
+        return Arrays.asList(Settings.getProperty("PRICEDISCOUNTS").split(","));
     }
 
 }

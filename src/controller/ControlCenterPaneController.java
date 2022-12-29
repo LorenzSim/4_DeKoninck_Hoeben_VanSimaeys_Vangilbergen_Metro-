@@ -11,8 +11,9 @@ public class ControlCenterPaneController implements Observer {
 
     public ControlCenterPaneController(MetroFacade metroFacade) {
         this.metroFacade = metroFacade;
-        metroFacade.attach(MetroEventsEnum.BUY_METROCARDS_TICKETS, this);
-        metroFacade.attach(MetroEventsEnum.SCAN_METROGATE, this);
+        metroFacade.addObserver(MetroEventsEnum.BUY_METROCARDS_TICKETS, this);
+        metroFacade.addObserver(MetroEventsEnum.SCAN_METROGATE, this);
+        metroFacade.addObserver(MetroEventsEnum.NEW_ALERT, this);
     }
 
     public void setView(ControlCenterPane controlCenterPane) {
@@ -24,6 +25,10 @@ public class ControlCenterPaneController implements Observer {
         controlCenterPane.upDateTotalPriceSold(metroFacade.getTotalPriceSold());
         controlCenterPane.updateNumberOfSoldTickets(metroFacade.getAmountSold());
         updateScannedTickets();
+        String lastAlert = metroFacade.getLastAlert();
+        if (lastAlert != null) {
+            createAlert(lastAlert);
+        }
     }
 
     public void activate(int gateNumber) {
