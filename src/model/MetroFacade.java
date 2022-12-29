@@ -73,10 +73,12 @@ public class MetroFacade implements Subject {
 
     public void activate(int gateNumber) {
         metroStation.activate(gateNumber);
+        notifyObservers(MetroEventsEnum.ACTIVATE_METROGATE);
     }
 
     public void scanMetroGate(int metroCardId, int gateNumber) {
-        metroStation.scanMetroGate(metrocardDatabase.getMetroCard(metroCardId), gateNumber);
+        MetroCard metroCard = metrocardDatabase.getMetroCard(metroCardId);
+        metroStation.scanMetroGate(metroCard, gateNumber);
         notifyObservers(MetroEventsEnum.SCAN_METROGATE);
     }
 
@@ -86,6 +88,7 @@ public class MetroFacade implements Subject {
 
     public void deactivate(int gateNumber) {
         metroStation.deactivate(gateNumber);
+        notifyObservers(MetroEventsEnum.DEACTIVATE_METROGATE);
     }
     public String getLastAction(int gateId) {
         return metroStation.getLastAction(gateId);

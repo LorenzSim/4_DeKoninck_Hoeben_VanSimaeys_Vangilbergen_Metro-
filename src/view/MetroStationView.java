@@ -79,7 +79,7 @@ public class MetroStationView {
 			controller.walkThroughGate(gateNumber);
 		};
 		walkThroughGateButton.setOnAction(walkThroughGate);
-		Text lastAction = new Text("");
+		Text lastAction = new Text("inactive");
 
 		gate.getChildren().addAll(titel, metroCardIdLabel, idSelector, scanMetroCardButton, walkThroughGateButton, lastAction);
 		return gate;

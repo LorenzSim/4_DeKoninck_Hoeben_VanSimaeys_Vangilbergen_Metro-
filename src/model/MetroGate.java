@@ -20,7 +20,7 @@ public class MetroGate {
         this.openState = new Open(this);
         this.closedState = new Closed(this);
         this.gateNumber = gateNumber;
-        setCurrentState(inactiveState);
+        setInactiveState();
         scannedCards = 0;
     }
 
@@ -28,6 +28,7 @@ public class MetroGate {
         this.currentState = currentState;
     }
     public void setInactiveState() {
+        setLastAction("inactive");
         setCurrentState(inactiveState);
     }
     public void setOpenState() {

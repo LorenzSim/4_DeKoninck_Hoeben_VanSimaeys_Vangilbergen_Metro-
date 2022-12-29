@@ -16,6 +16,8 @@ public class MetroStationViewController implements Observer {
         this.metroFacade = metroFacade;
         this.metroFacade.attach(MetroEventsEnum.OPEN_METROSTATION, this);
         metroFacade.attach(MetroEventsEnum.BUY_METROCARD, this);
+        metroFacade.attach(MetroEventsEnum.ACTIVATE_METROGATE, this);
+        metroFacade.attach(MetroEventsEnum.DEACTIVATE_METROGATE, this);
     }
 
     public void setView(MetroStationView view) {
@@ -26,6 +28,9 @@ public class MetroStationViewController implements Observer {
     public void update() {
         List<Integer> IDs = metroFacade.getMetroCardIDList();
         metroStationView.updateMetroCardIDList(IDs);
+        updateLastAction(1, metroFacade.getLastAction(1));
+        updateLastAction(2, metroFacade.getLastAction(2));
+        updateLastAction(3, metroFacade.getLastAction(3));
     }
 
     public void scanMetroCard(int metroCardId, int gateId) {

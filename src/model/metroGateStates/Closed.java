@@ -31,6 +31,7 @@ public class Closed extends MetroGateState{
 
     @Override
     public void walkThroughGate() {
+        metroGate.setLastAction("UNAUTHORIZED PASSAGE");
         throw new IllegalStateException(String.format("%s UNAUTHORIZED PASSAGE GATE %d", LocalTime.now(), metroGate.getGateNumber()));
     }
 

@@ -29,6 +29,7 @@ public class ControlCenterPaneController implements Observer {
     public void activate(int gateNumber) {
         try {
             metroFacade.activate(gateNumber);
+
         } catch (IllegalStateException e){
             createAlert(e.getMessage());
         }
@@ -43,7 +44,7 @@ public class ControlCenterPaneController implements Observer {
         }
     }
 
-    public void updateScannedTickets() {
+    private void updateScannedTickets() {
         controlCenterPane.updateScannedTickets(1, metroFacade.getScannedCards(1));
         controlCenterPane.updateScannedTickets(2, metroFacade.getScannedCards(2));
         controlCenterPane.updateScannedTickets(3, metroFacade.getScannedCards(3));
