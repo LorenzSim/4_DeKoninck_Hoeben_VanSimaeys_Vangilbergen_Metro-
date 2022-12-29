@@ -1,15 +1,11 @@
 package model.TicketPriceDecorator;
 
 import model.MetroCard;
+import model.Settings;
 
-import java.io.IOException;
-import java.io.InputStream;
+
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+
 
 public class TicketPriceFactory {
     private static TicketPriceFactory instance;
@@ -21,18 +17,7 @@ public class TicketPriceFactory {
     }
 
     public TicketPrice createTicketPrice(boolean is24Min, boolean is64Plus, boolean isStudent, MetroCard metroCard) {
-        Properties properties = new Properties();
-        List<String> allowedDiscounts;
-
-        try {
-            InputStream is = Files.newInputStream(Paths.get("src/bestanden/settings.properties"));
-            properties.load(is);
-            is.close();
-            allowedDiscounts = Arrays.asList(properties.getProperty("PRICEDISCOUNTS").split(","));
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String[] allowedDiscounts = Settings.getProperty("PRICEDISCOUNTS").split(",");
 
         TicketPrice result = new BasicTicketPrice();
 

@@ -1,14 +1,14 @@
 package model.database.loadSaveStrategies;
 
 public enum LoadSaveStrategyEnum {
-    TEKST("MetroCardsTekstLoadSaveStrategy"), EXCEL("MetroCardsExcelLoadSaveStrategy")
+    TEKST("model.database.loadSaveStrategies.MetroCardsTekstLoadSaveStrategy"), EXCEL("model.database.loadSaveStrategies.MetroCardsExcelLoadSaveStrategy")
     ;
-    final String stringValue;
-    LoadSaveStrategyEnum(String loadSaveStrategy) {
-        this.stringValue = loadSaveStrategy;
+    final String classFileName;
+    LoadSaveStrategyEnum(String classFileName) {
+        this.classFileName = classFileName;
     }
 
-    public String getStringValue() {
-        return stringValue;
+    public String getClassFileName() {
+        return classFileName;
     }
 }

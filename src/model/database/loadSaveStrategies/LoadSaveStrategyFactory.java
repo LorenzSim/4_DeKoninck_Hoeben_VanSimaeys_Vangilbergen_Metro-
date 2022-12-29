@@ -1,6 +1,7 @@
 package model.database.loadSaveStrategies;
 
 import model.MetroCard;
+import model.Settings;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,20 +25,16 @@ public class LoadSaveStrategyFactory {
 
         LoadSaveStrategy<Integer, MetroCard> result;
         try {
-            Properties properties = new Properties();
-            InputStream is = Files.newInputStream(Paths.get("src/bestanden/settings.properties"));
-            properties.load(is);
-            is.close();
-            LoadSaveStrategyEnum strategy = LoadSaveStrategyEnum.valueOf(properties.getProperty("loadSaveStrategy"));
 
-            String className = "model.database.loadSaveStrategies." + strategy.getStringValue();
-            Class<?> strategyClass = Class.forName(className);
+            LoadSaveStrategyEnum strategy = LoadSaveStrategyEnum.valueOf(Settings.getProperty("loadSaveStrategy"));
+
+            Class<?> strategyClass = Class.forName(strategy.getClassFileName());
             Object obj = strategyClass.getConstructor().newInstance();
 
             result = (LoadSaveStrategy<Integer, MetroCard>) obj;
 
         } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException |
-                 NoSuchMethodException | IOException e) {
+                 NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
         return result;
