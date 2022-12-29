@@ -1,7 +1,5 @@
 package model;
 
-import model.metroGateStates.Inactive;
-import model.metroGateStates.MetroGateState;
 
 import java.util.Map;
 import java.util.TreeMap;

@@ -29,10 +29,11 @@ public class MetroStationViewController implements Observer {
         if (metroFacade.isStationIsOpen()){
             List<Integer> IDs = metroFacade.getMetroCardIDList();
             metroStationView.updateMetroCardIDList(IDs);
-            updateLastAction(1, metroFacade.getLastAction(1));
-            updateLastAction(2, metroFacade.getLastAction(2));
-            updateLastAction(3, metroFacade.getLastAction(3));
         }
+        updateLastAction(1, metroFacade.getLastAction(1));
+        updateLastAction(2, metroFacade.getLastAction(2));
+        updateLastAction(3, metroFacade.getLastAction(3));
+
         setGateActive(1, metroFacade.isGateActive(1));
         setGateActive(2, metroFacade.isGateActive(2));
         setGateActive(3, metroFacade.isGateActive(3));
