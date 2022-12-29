@@ -29,12 +29,20 @@ public class ControlCenterPane extends GridPane {
 
 
         Button openMetrostationButton = new Button("Open metrostation");
-        EventHandler<ActionEvent> event = e -> {
+        EventHandler<ActionEvent> open = e -> {
             controller.openMetroStation();
             getChildren().remove(openMetrostationButton);
             getChildren().addAll(container);
         };
-        openMetrostationButton.setOnAction(event);
+        openMetrostationButton.setOnAction(open);
+
+        closeMetrostationButton = new Button("Close metrostation");
+        EventHandler<ActionEvent> close = e -> {
+            controller.closeMetroStation();
+            getChildren().removeAll(container);
+            getChildren().add(openMetrostationButton);
+        };
+        closeMetrostationButton.setOnAction(close);
 
         // blok 1
         VBox ticketMonitoring = new VBox();

@@ -2,6 +2,7 @@ package model.database;
 
 import model.MetroCard;
 import model.database.loadSaveStrategies.LoadSaveStrategy;
+import model.database.loadSaveStrategies.LoadSaveStrategyEnum;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,6 +34,10 @@ public class MetroCardDatabase {
     }
     public ArrayList<Integer> getMetroCardIDList() {
         return new ArrayList<>(cards.keySet());
+    }
+
+    public LoadSaveStrategy getLoadSaveStrategy(){
+        return loadSaveStrategy;
     }
 
     public void addMetroCard() {

@@ -38,11 +38,17 @@ public class MetroFacade implements Subject {
     }
 
     public void openMetroStation() {
-        LoadSaveStrategy<Integer, MetroCard> strategy = LoadSaveStrategyFactory.getInstance().createLoadSaveStrategy() ;
+        LoadSaveStrategy<Integer, MetroCard> strategy = LoadSaveStrategyFactory.getInstance().createLoadSaveStrategy();
         metrocardDatabase.setLoadSaveStrategy(strategy);
         metrocardDatabase.load();
         this.stationIsOpen = true;
         notifyObservers(MetroEventsEnum.OPEN_METROSTATION);
+    }
+    public void closeMetroStation() {
+        metrocardDatabase.save();
+        this.stationIsOpen = false;
+        metroStation.closeStation();
+        notifyObservers(MetroEventsEnum.CLOSE_METROSTATION);
     }
     public List<MetroCard> getMetroCardList() {
         return metrocardDatabase.getMetroCardList();
